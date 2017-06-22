@@ -79,7 +79,7 @@ Now that we have all of the Docker dependencies installed, we can create a Docke
        -e ZOOKEEPER_SERVERS="localhost:22888:23888;localhost:32888:33888;localhost:42888:43888" \
        confluentinc/cp-zookeeper:3.2.1
 
-  Before moving on, we'll check the logs to see the broker has booted up successfully by running the following command:
+  Before moving on, we'll check the logs to see that Zookeeper has booted up successfully by running the following command:
 
   .. sourcecode:: bash
 
