@@ -325,13 +325,11 @@ The following settings must be passed to run the Kafka Connect Docker image.
 
   Converter class for internal values that implements the ``Converter`` interface.
 
-``CONNECT_REST_ADVERTISED_HOST_NAME``
-
-  Advertised host name is required for starting up the Docker image because it is important to think through how other clients are going to connect to Connect REST API.  In a Docker environment, you will need to make sure that your clients can connect to Connect and other services.  Advertised host name is how Connect gives out a host name that can be reached by the client.
-
 Optional Settings
 """""""""""""""""
 All other settings for Connect like security, monitoring interceptors, producer and consumer overrides can be passed to the Docker images as environment variables. The names of these environment variables are derived by replacing ``.`` with ``_``, converting the resulting string to uppercase and prefixing it with ``CONNECT_``. For example, if you need to set ``ssl.key.password``, the environment variable name would be ``CONNECT_SSL_KEY_PASSWORD``.
+
+An example of particular importance is ``CONNECT_REST_ADVERTISED_HOST_NAME``.  If this is set, this is the hostname that will be given out to other workers to connect to.  If the other workers are not on the same Docker overlay network then this will need to be set.
 
 The image will then convert these environment variables to corresponding Connect config variables.
 

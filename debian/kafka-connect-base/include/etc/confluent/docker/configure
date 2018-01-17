@@ -28,9 +28,6 @@ dub ensure CONNECT_KEY_CONVERTER
 dub ensure CONNECT_VALUE_CONVERTER
 dub ensure CONNECT_INTERNAL_KEY_CONVERTER
 dub ensure CONNECT_INTERNAL_VALUE_CONVERTER
-# This is required to avoid config bugs. You should set this to a value that is
-# resolvable by all containers.
-dub ensure CONNECT_REST_ADVERTISED_HOST_NAME
 
 # Default to 8083, which matches the mesos-overrides. This is here in case we extend the containers to remove the mesos overrides.
 if [ -z "$CONNECT_REST_PORT" ]; then
