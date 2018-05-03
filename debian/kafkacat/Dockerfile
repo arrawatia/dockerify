@@ -30,6 +30,14 @@ RUN echo "Building kafkacat ....." \
         libsasl2-modules-gssapi-mit \
         krb5-user \
         krb5-config \
+        wget \
+        curl \
+        dnsutils \
+        tcptraceroute \
+        hping3 \
+        nmap \
+        nc \
+        jq \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 CMD ["kafkacat"]
