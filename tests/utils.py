@@ -13,29 +13,37 @@ import json
 import subprocess
 
 
+def get_docker_client():
+    use_local_docker = os.environ.get("CONFLUENT_USE_LOCAL_DOCKER")
+    if use_local_docker:
+        return docker.Client()
+    else:
+        return docker.from_env(assert_hostname=False)
+
+
 def build_image(image_name, dockerfile_dir):
     print("Building image %s from %s" % (image_name, dockerfile_dir))
-    client = docker.from_env(assert_hostname=False)
+    client = get_docker_client()
     output = client.build(dockerfile_dir, rm=True, tag=image_name)
     response = "".join(["     %s" % (line,) for line in output])
     print(response)
 
 
 def image_exists(image_name):
-    client = docker.from_env(assert_hostname=False)
+    client = get_docker_client()
     tags = [t for image in client.images() for t in image['RepoTags']]
     return "%s:%s" % (image_name, "latest") in tags
 
 
 def pull_image(image_name):
-    client = docker.from_env(assert_hostname=False)
+    client = get_docker_client()
     if not image_exists(image_name):
         client.pull(image_name)
 
 
 def run_docker_command(timeout=None, **kwargs):
     pull_image(kwargs["image"])
-    client = docker.from_env(assert_hostname=False)
+    client = get_docker_client()
     kwargs["labels"] = {"io.confluent.docker.testing": "true"}
     container = TestContainer.create(client, **kwargs)
     container.start()
@@ -161,12 +169,15 @@ class TestMachine():
 
     def __init__(self, machine_name):
         self.machine_name = machine_name
-        # Ensure docker-machine is installed
-        subprocess.check_call("type docker-machine", shell=True)
-        # Ensure the machine is ready.
-        assert self.status() == "Running"
+        self.use_local_docker = os.environ.get("CONFLUENT_USE_LOCAL_DOCKER")
+        if not self.use_local_docker:
+            # Ensure docker-machine is installed
+            subprocess.check_call("type docker-machine", shell=True)
+            # Ensure the machine is ready.
+            assert self.status() == "Running"
 
     def run_cmd(self, cmd):
+        print("Running SSH command: %s" % cmd)
         output = subprocess.check_output(cmd, shell=True, stderr=subprocess.STDOUT)
         return output
 
@@ -175,15 +186,27 @@ class TestMachine():
         return self.run_cmd(cmd).strip()
 
     def get_internal_ip(self, nw_interface="eth0"):
-        cmd = "docker-machine ssh %s /sbin/ifconfig %s | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" % (self.machine_name, nw_interface)
+        if self.use_local_docker:
+            cmd = "/sbin/ifconfig %s | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" % nw_interface
+        else:
+            cmd = "docker-machine ssh %s /sbin/ifconfig %s | grep 'inet addr:' | cut -d: -f2 | awk '{ print $1}'" % (self.machine_name, nw_interface)
         return self.run_cmd(cmd)
 
     def scp_to_machine(self, local_path, machine_path, recursive=True):
         if recursive:
             recursive_flag = "-r"
-        cmd = "docker-machine scp %s %s %s:%s" % (recursive_flag, local_path, self.machine_name, machine_path)
+        if self.use_local_docker:
+            cmd = "cp %s %s %s" % (recursive_flag, local_path, machine_path)
+        else:
+            cmd = "docker-machine scp %s %s %s:%s" % (recursive_flag, local_path, self.machine_name, machine_path)
         return self.run_cmd(cmd)
 
     def ssh(self, command):
-        cmd = "docker-machine ssh %s %s" % (self.machine_name, command)
+        if self.use_local_docker:
+            if command.startswith('"'):
+                cmd = "bash -c %s" % command
+            else:
+                cmd = command
+        else:
+            cmd = "docker-machine ssh %s %s" % (self.machine_name, command)
         return self.run_cmd(cmd)

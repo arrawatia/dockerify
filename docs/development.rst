@@ -144,6 +144,24 @@ To run a single test, you can do so with Python.  In the following example, we r
     Deleting All Docker Containers: During the development process, you'll often need to delete and rebuild the Docker images.  You can do so by running ``docker rm -f $(docker ps -a -q)``.
 
 
+.. _configuring_ci :
+
+Configuring CI
+~~~~~~~~~~~~~~
+
+Note: This has been tested on Ubuntu 15.10 only with Docker v1.12.1.
+
+1. Install `Docker<https://docs.docker.com/engine/installation/linux/ubuntulinux>`_. Make sure that the current user can issue `docker` commands by `creating a docker group <https://docs.docker.com/engine/installation/linux/ubuntulinux/#/create-a-docker-group>`_.
+
+2. Install prerequisites.
+
+  .. sourcecode:: bash
+
+    sudo apt-get install -yy git python make python-pip virtualenv maven openjdk-8-jdk
+
+3. Run ``make ci`` to build all the images and run all the tests.
+
+
 Make Targets
 ~~~~~~~~~~~~
 
@@ -745,4 +763,3 @@ References
 ----------
 
 - Docker's example for `setting up a Dockerized AWS EC2 instance <https://docs.docker.com/machine/examples/aws/>`_.
-

@@ -169,3 +169,8 @@ test-all: \
 	test-schema-registry \
 	test-kafka-rest \
 	test-control-center
+
+ci: venv clean build-debian build-test-images tests/fixtures/debian/kafka-connect/jars/mysql-connector-java-${MYSQL_DRIVER_VERSION}-bin.jar
+	rm -rf /tmp/*test*
+	DOCKER_MACHINE_NAME=local CONFLUENT_USE_LOCAL_DOCKER=1 IMAGE_DIR=$(pwd) venv/bin/py.test tests -v
+	
