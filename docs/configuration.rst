@@ -285,7 +285,7 @@ The following settings must be passed to run the Kafka Connect Docker image.
 
 ``CONNECT_BOOTSTRAP_SERVERS``
 
-  A unique string that identifies the Connect cluster group this worker belongs to.
+  A list of host/port pairs to use for establishing the initial connection to the Kafka cluster. The client will make use of all servers irrespective of which servers are specified here for bootstrapping; this list only impacts the initial hosts used to discover the full set of servers. This list should be in the form host1:port1,host2:port2,.... Since these servers are just used for the initial connection to discover the full cluster membership (which may change dynamically), this list need not contain the full set of servers (you may want more than one, though, in case a server is down).
 
 ``CONNECT_GROUP_ID``
 
