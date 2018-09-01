@@ -26,7 +26,7 @@ LABEL io.confluent.docker.build.number=$BUILD_NUMBER
 
 ENV COMPONENT=kafka-connect
 
-RUN echo "===> Installing JDBC, Elasticsearch and Hadoop connectors ..." \
+RUN echo "===> Installing JDBC, Elasticsearch, Hadoop, S3, and JMS connectors ..." \
     && apt-get -qq update \
     && apt-get install -y \
         confluent-kafka-connect-jdbc=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
@@ -37,3 +37,6 @@ RUN echo "===> Installing JDBC, Elasticsearch and Hadoop connectors ..." \
         confluent-kafka-connect-jms=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> Cleaning up ..."  \
     && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/*
+
+RUN echo "===> Installing Cassandra connector from Confluent Hub ..." \
+    && confluent-hub install --no-prompt --component-dir /usr/share/java 'confluentinc/kafka-connect-cassandra:1.0.0'
