@@ -14,6 +14,8 @@ they are hardcoded for now (fix is coming soon).
 For any new images, they should be added to the repo itself by following [Docker Build Integration](https://confluentinc.atlassian.net/wiki/x/PIDaC)
 
 # Important Caveat - Images Not Tested for Docker for Mac or Windows
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fconfluentinc%2Fcp-docker-images.svg?type=shield)](https://app.fossa.io/projects/git%2Bgithub.com%2Fconfluentinc%2Fcp-docker-images?ref=badge_shield)
+
 	
 These images are not tested on Docker for Mac or Docker for Windows. These images will be updated in the near future to support these platforms. For more details on these known issues, you can refer to the following links:
 
@@ -39,3 +41,6 @@ Start by reading our guidelines on contributing to this project found [here](htt
 
 The project is licensed under the Apache 2 license. For more information on the licenses for each of the individual Confluent Platform components packaged in the images, please refer to the respective [Confluent Platform documentation for each component](http://docs.confluent.io/current/platform.html).  
 
+
+
+[![FOSSA Status](https://app.fossa.io/api/projects/git%2Bgithub.com%2Fconfluentinc%2Fcp-docker-images.svg?type=large)](https://app.fossa.io/projects/git%2Bgithub.com%2Fconfluentinc%2Fcp-docker-images?ref=badge_large)
