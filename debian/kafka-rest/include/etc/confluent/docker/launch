@@ -30,8 +30,10 @@ export KAFKA_REST_JMX_HOSTNAME=${KAFKA_REST_JMX_HOSTNAME:-$(hostname -i | cut -d
 # JMX port to use
 if [  $KAFKA_REST_JMX_PORT ]; then
   export JMX_PORT=$KAFKA_REST_JMX_PORT
-export KAFKA_REST_JMX_OPTS="$KAFKA_REST_JMX_OPTS -Djava.rmi.server.hostname=$KAFKA_REST_JMX_HOSTNAME -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT -Dcom.sun.management.jmxremote.port=$JMX_PORT"
+  KAFKA_REST_JMX_OPTS="$KAFKA_REST_JMX_OPTS -Djava.rmi.server.hostname=$KAFKA_REST_JMX_HOSTNAME -Dcom.sun.management.jmxremote.local.only=false -Dcom.sun.management.jmxremote.rmi.port=$JMX_PORT -Dcom.sun.management.jmxremote.port=$JMX_PORT"
 fi
+
+export KAFKAREST_JMX_OPTS=$KAFKA_REST_JMX_OPTS
 
 echo "===> Launching ${COMPONENT} ... "
 exec "${COMPONENT}"-start /etc/"${COMPONENT}"/"${COMPONENT}".properties
