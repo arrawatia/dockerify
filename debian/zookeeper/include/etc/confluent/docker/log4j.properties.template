@@ -8,6 +8,6 @@ log4j.appender.stdout.layout.ConversionPattern=[%d] %p %m (%c)%n
 {% if env['ZOOKEEPER_LOG4J_LOGGERS'] %}
 {% set loggers = parse_log4j_loggers(env['ZOOKEEPER_LOG4J_LOGGERS']) %}
 {% for logger,loglevel in loggers.iteritems() %}
-log4j.logger.{{logger}}={{loglevel}}, stdout
+log4j.logger.{{logger}}={{loglevel}}
 {% endfor %}
 {% endif %}
