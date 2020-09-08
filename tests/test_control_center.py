@@ -58,7 +58,6 @@ class ConfigTest(unittest.TestCase):
         expected = props_to_list("""
         bootstrap.servers=kafka:9092
         zookeeper.connect=zookeeper:2181/defaultconfig
-        confluent.controlcenter.data.dir=/var/lib/confluent-control-center
         confluent.monitoring.interceptor.topic.replication=1
         confluent.controlcenter.internal.topics.replication=1
         confluent.controlcenter.command.topic.replication=1
@@ -74,7 +73,6 @@ class ConfigTest(unittest.TestCase):
         expected = props_to_list("""
         bootstrap.servers=kafka:9092
         zookeeper.connect=zookeeper:2181/defaultconfig
-        confluent.controlcenter.data.dir=/var/lib/confluent-control-center
         confluent.monitoring.interceptor.topic.replication=1
         confluent.controlcenter.internal.topics.replication=1
         confluent.metrics.topic.replication=1

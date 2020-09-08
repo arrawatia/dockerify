@@ -26,8 +26,6 @@ MAINTAINER partner-support@confluent.io
 LABEL io.confluent.docker=true
 
 ENV COMPONENT=control-center
-ENV CONTROL_CENTER_DATA_DIR=/var/lib/confluent-${COMPONENT}
-ENV CONTROL_CENTER_CONFIG_DIR=/etc/confluent-${COMPONENT}
 
 # Default listener
 EXPOSE 9021
@@ -39,8 +37,8 @@ RUN echo "===> Installing ${COMPONENT}..." \
     && rm -rf /tmp/*  \
     \
     && echo "===> Setting up ${COMPONENT} dirs" \
-    && mkdir -p "${CONTROL_CENTER_DATA_DIR}" \
-    && chmod -R ag+w "${CONTROL_CENTER_CONFIG_DIR}" "${CONTROL_CENTER_DATA_DIR}"
+    && mkdir -p "/var/lib/confluent-${COMPONENT}" \
+    && chmod -R ag+w "/etc/confluent-${COMPONENT}" "/var/lib/confluent-${COMPONENT}"
 
 COPY include/etc/confluent/docker /etc/confluent/docker
 

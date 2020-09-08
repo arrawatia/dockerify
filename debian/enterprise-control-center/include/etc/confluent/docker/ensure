@@ -24,4 +24,4 @@ echo "===> Check if Kafka is healthy ..."
 cub kafka-ready "${CONTROL_CENTER_REPLICATION_FACTOR}" \
   "${CONTROL_CENTER_CUB_KAFKA_TIMEOUT:-40}" \
   -b "${CONTROL_CENTER_BOOTSTRAP_SERVERS}" \
-  --config "${CONTROL_CENTER_CONFIG_DIR}/admin.properties"
+  --config "/etc/confluent-${COMPONENT}/admin.properties"

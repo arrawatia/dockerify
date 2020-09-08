@@ -20,16 +20,15 @@ set -o nounset \
     -o xtrace
 
 dub ensure CONTROL_CENTER_BOOTSTRAP_SERVERS
-dub ensure CONTROL_CENTER_DATA_DIR
 dub ensure CONTROL_CENTER_REPLICATION_FACTOR
-dub ensure CONTROL_CENTER_CONFIG_DIR
 
-echo "===> Check if ${CONTROL_CENTER_CONFIG_DIR} is writable ..."
-dub path "${CONTROL_CENTER_CONFIG_DIR}" writable
+echo "===> Check if /etc/confluent-${COMPONENT} is writable ..."
+dub path "/etc/confluent-${COMPONENT}" writable
 
+export CONTROL_CENTER_DATA_DIR=${CONTROL_CENTER_DATA_DIR:-"/var/lib/confluent-control-center"}
 echo "===> Check if ${CONTROL_CENTER_DATA_DIR} is writable ..."
 dub path "${CONTROL_CENTER_DATA_DIR}" writable
 
-dub template "/etc/confluent/docker/${COMPONENT}.properties.template" "${CONTROL_CENTER_CONFIG_DIR}/${COMPONENT}.properties"
-dub template "/etc/confluent/docker/log4j.properties.template" "${CONTROL_CENTER_CONFIG_DIR}/log4j.properties"
-dub template "/etc/confluent/docker/admin.properties.template" "${CONTROL_CENTER_CONFIG_DIR}/admin.properties"
+dub template "/etc/confluent/docker/${COMPONENT}.properties.template" "/etc/confluent-${COMPONENT}/${COMPONENT}.properties"
+dub template "/etc/confluent/docker/log4j.properties.template" "/etc/confluent-${COMPONENT}/log4j.properties"
+dub template "/etc/confluent/docker/admin.properties.template" "/etc/confluent-${COMPONENT}/admin.properties"

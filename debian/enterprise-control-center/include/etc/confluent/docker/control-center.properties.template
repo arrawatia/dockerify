@@ -2,7 +2,6 @@
 {# required properties #}
 bootstrap.servers={{env['CONTROL_CENTER_BOOTSTRAP_SERVERS']}}
 zookeeper.connect={{env['CONTROL_CENTER_ZOOKEEPER_CONNECT']}}
-confluent.controlcenter.data.dir={{env['CONTROL_CENTER_DATA_DIR']}}
 confluent.monitoring.interceptor.topic.replication={{env.get('CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_REPLICATION', env['CONTROL_CENTER_REPLICATION_FACTOR'])}}
 confluent.controlcenter.internal.topics.replication={{env.get('CONTROL_CENTER_INTERNAL_TOPICS_REPLICATION', env['CONTROL_CENTER_REPLICATION_FACTOR'])}}
 confluent.controlcenter.command.topic.replication={{env.get('CONTROL_CENTER_COMMAND_TOPIC_REPLICATION', env['CONTROL_CENTER_REPLICATION_FACTOR'])}}
@@ -12,6 +11,7 @@ confluent.metrics.topic.replication={{env.get('CONTROL_CENTER_METRICS_TOPIC_REPL
 {% set other_props = {
     'CONTROL_CENTER_ID': 'confluent.controlcenter.id',
     'CONTROL_CENTER_NAME': 'confluent.controlcenter.name',
+    'CONTROL_CENTER_DATA_DIR': 'confluent.controlcenter.data.dir',
     'CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC': 'confluent.monitoring.interceptor.topic',
     'CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_PARTITIONS': 'confluent.monitoring.interceptor.topic.partitions',
     'CONTROL_CENTER_MONITORING_INTERCEPTOR_TOPIC_RETENTION_MS': 'confluent.monitoring.interceptor.topic.retention.ms',
