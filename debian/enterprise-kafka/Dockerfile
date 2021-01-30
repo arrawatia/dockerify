@@ -37,8 +37,8 @@ RUN echo "===> installing confluent-support-metrics ..." \
     && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* \
     \
 		&& echo "===> Setting up ${COMPONENT} dirs..." \
-   	&& mkdir -p /var/lib/${COMPONENT}/data /etc/${COMPONENT}/secrets\
-   	&& chmod -R ag+w /etc/${COMPONENT} /var/lib/${COMPONENT}/data /etc/${COMPONENT}/secrets
+   	&& mkdir -p /var/lib/${COMPONENT}/data /etc/${COMPONENT}/secrets /var/log/${COMPONENT} \
+   	&& chmod -R ag+w /etc/${COMPONENT} /var/lib/${COMPONENT}/data /etc/${COMPONENT}/secrets /var/log/${COMPONENT}
 
 VOLUME ["/var/lib/${COMPONENT}/data", "/etc/${COMPONENT}/secrets"]
 

@@ -40,8 +40,8 @@ RUN echo "===> installing ${COMPONENT}..." \
     && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* \
     \
     && echo "===> Setting up ${COMPONENT} dirs" \
-    && mkdir -p /etc/${COMPONENT}/secrets\
-    && chmod -R ag+w /etc/${COMPONENT} /etc/${COMPONENT}/secrets
+    && mkdir -p /etc/${COMPONENT}/secrets /var/log/${COMPONENT} \
+    && chmod -R ag+w /etc/${COMPONENT} /etc/${COMPONENT}/secrets /var/log/${COMPONENT}
 
 VOLUME ["/etc/${COMPONENT}/secrets"]
 
