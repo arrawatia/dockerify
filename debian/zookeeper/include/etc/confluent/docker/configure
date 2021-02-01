@@ -25,8 +25,14 @@ dub ensure ZOOKEEPER_CLIENT_PORT
 dub path /etc/kafka/ writable
 
 # myid is required for clusters
+# Detect the ZOOKEEPER_SERVE_ID based on the hostname.
+# StatefulSets (kubernetes) are numbered from 0 so we have to always increment by 1
 if [[ -n "${ZOOKEEPER_SERVERS-}" ]]
 then
+  if [ -z "${ZOOKEEPER_SERVER_ID-unset}" ]; then
+    export ZOOKEEPER_SERVER_ID=$(hostname | awk -F'-' '{print $NF+1}')
+    echo "Detected Zookeeper ID $ZOOKEEPER_SERVER_ID"
+  fi
   dub ensure ZOOKEEPER_SERVER_ID
   export ZOOKEEPER_INIT_LIMIT=${ZOOKEEPER_INIT_LIMIT:-"10"}
   export ZOOKEEPER_SYNC_LIMIT=${ZOOKEEPER_SYNC_LIMIT:-"5"}
