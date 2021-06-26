@@ -30,6 +30,7 @@ services:
       - kafka
     environment:
       KAFKA_MQTT_BOOTSTRAP_SERVERS: PLAINTEXT://localhost:29092
+      KAFKA_MQTT_CONFLUENT_TOPIC_REPLICATION_FACTOR: 1
       KAFKA_MQTT_TOPIC_REGEX_LIST: temperature:.*
     extra_hosts:
       - "moby:127.0.0.1"
