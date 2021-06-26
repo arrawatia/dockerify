@@ -29,7 +29,7 @@ ENV COMPONENT=kafka-rest
 EXPOSE 8082
 
 RUN echo "===> installing ${COMPONENT}..." \
-    && apt-get update && apt-get install -y \
+    && apt-get update && apt-get install -y --force-yes \
         confluent-${COMPONENT}=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
         confluent-control-center=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
         confluent-security=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \

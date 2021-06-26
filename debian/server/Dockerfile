@@ -35,7 +35,7 @@ ENV COMPONENT=kafka
 EXPOSE 9092
 
 RUN echo "===> installing ${COMPONENT}..." \
-    && apt-get update && apt-get install -y confluent-server=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
+    && apt-get update && apt-get install -y --force-yes confluent-server=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> installing confluent-rebalancer ..." \
     && apt-get update && apt-get install -y \
               confluent-rebalancer=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
