@@ -31,14 +31,14 @@ EXPOSE 8083
 
 RUN echo "===> Installing Schema Registry (for Avro jars) ..." \
     && apt-get -qq update \
-    && apt-get install -y \
+    && apt-get --no-install-recommends install -y \
         confluent-schema-registry=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> Installing Controlcenter for monitoring interceptors ..."\
-    && apt-get install -y confluent-control-center=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
+    && apt-get --no-install-recommends install -y confluent-control-center=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> Installing Confluent security plugins ..."\
-    && apt-get install -y confluent-security=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
+    && apt-get --no-install-recommends install -y confluent-security=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> Installing Confluent Hub client ..."\
-    && apt-get install -y confluent-hub-client=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
+    && apt-get --no-install-recommends install -y confluent-hub-client=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> Cleaning up ..."  \
     && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* \
     echo "===> Setting up ${COMPONENT} dirs ..." \

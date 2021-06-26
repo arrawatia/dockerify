@@ -29,7 +29,7 @@ ENV COMPONENT=kafka-mqtt
 EXPOSE 1883
 
 RUN echo "===> installing ${COMPONENT}..." \
-    && apt-get update && apt-get install -y \
+    && apt-get update && apt-get --no-install-recommends install -y \
         confluent-${COMPONENT}=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     && echo "===> clean up ..."  \
     && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* \

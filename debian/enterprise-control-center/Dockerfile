@@ -33,7 +33,7 @@ ENV CONTROL_CENTER_CONFIG_DIR=/etc/confluent-${COMPONENT}
 EXPOSE 9021
 
 RUN echo "===> Installing ${COMPONENT}..." \
-    && apt-get update && apt-get install -y confluent-${COMPONENT}=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
+    && apt-get update && apt-get --no-install-recommends install -y confluent-${COMPONENT}=${CONFLUENT_VERSION}${CONFLUENT_PLATFORM_LABEL}-${CONFLUENT_DEB_VERSION} \
     \
     && echo "===> Cleaning up ..."  \
     && apt-get clean && rm -rf /tmp/* /var/lib/apt/lists/* \

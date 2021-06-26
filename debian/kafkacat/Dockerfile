@@ -8,7 +8,7 @@ ENV BUILD_PACKAGES="build-essential cmake python git curl zlib1g-dev libsasl2-de
 
 RUN echo "Building kafkacat ....." \
     && apt-get update -y \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y $BUILD_PACKAGES \
+    && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends install -y $BUILD_PACKAGES \
     && git clone https://github.com/edenhill/kafkacat \
     && cd kafkacat \
     && git checkout tags/debian/$VERSION \
@@ -29,7 +29,7 @@ COPY --from=0 /build/kafkacat/kafkacat /usr/local/bin/
 
 RUN apt-get update -y \
     && echo "Installing runtime dependencies for SSL and SASL support ...." \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends install -y \
         openssl \
         libssl1.1 \
         libsasl2-2 \

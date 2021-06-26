@@ -69,7 +69,7 @@ RUN echo "===> Updating debian ....." \
     && apt-get -qq update \
     \
     && echo "===> Installing curl wget netcat python...." \
-    && DEBIAN_FRONTEND=noninteractive apt-get install -y \
+    && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends install -y \
                 apt-transport-https \
                 curl \
                 gnupg-curl \
@@ -86,9 +86,9 @@ RUN echo "===> Updating debian ....." \
     && apt-key adv --keyserver hkps://keyserver.ubuntu.com:443 --recv-keys 0x27BC0C8CB3D81623F59BDADCB1998361219BD9C9 \
     && echo "deb http://repos.azulsystems.com/debian stable  main" >> /etc/apt/sources.list.d/zulu.list \
     && apt-get -qq update \
-    && apt-get -y install zulu-${ZULU_OPENJDK_VERSION} \
+    && apt-get --no-install-recommends install -y zulu-${ZULU_OPENJDK_VERSION} \
     && echo "===> Installing Kerberos Patch ..." \
-    && DEBIAN_FRONTEND=noninteractive apt-get -y install krb5-user \
+    && DEBIAN_FRONTEND=noninteractive apt-get --no-install-recommends install -y krb5-user \
     && rm -rf /var/lib/apt/lists/* \
     && echo "===> Adding confluent repository...${CONFLUENT_PACKAGES_REPO}/deb/${CONFLUENT_MAJOR_VERSION}.${CONFLUENT_MINOR_VERSION}" \
     && if [ "x$ALLOW_UNSIGNED" = "xtrue" ]; then echo "APT::Get::AllowUnauthenticated \"true\";" > /etc/apt/apt.conf.d/allow_unauthenticated; else curl -L ${CONFLUENT_PACKAGES_REPO}/deb/${CONFLUENT_MAJOR_VERSION}.${CONFLUENT_MINOR_VERSION}/archive.key | apt-key add - ; fi \
