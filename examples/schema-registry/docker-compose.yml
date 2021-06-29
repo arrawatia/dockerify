@@ -1,0 +1,44 @@
+---
+version: '2'
+services:
+  zookeeper:
+    image: confluentinc/cp-zookeeper:3.1.0
+    network_mode: host
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 32181
+      ZOOKEEPER_TICK_TIME: 2000
+
+  kafka:
+    image: confluentinc/cp-kafka:3.1.0
+    network_mode: host
+    depends_on:
+      - zookeeper
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: localhost:32181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.124:39092
+      KAFKA_DELETE_TOPIC_ENABLE: "true"
+
+  schema-registry:
+    image: confluentinc/cp-schema-registry:3.1.0
+    network_mode: host
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      SCHEMA_REGISTRY_KAFKASTORE_CONNECTION_URL: localhost:32181
+      SCHEMA_REGISTRY_HOST_NAME: schema-registry
+      SCHEMA_REGISTRY_LISTENERS: http://0.0.0.0:38081
+
+  kafka-rest:
+    image: confluentinc/cp-kafka-rest:3.1.0
+    network_mode: host
+    depends_on:
+      - zookeeper
+      - kafka
+    environment:
+      KAFKA_REST_ZOOKEEPER_CONNECT: localhost:32181
+      KAFKA_REST_HOST_NAME: 192.168.0.124
+      KAFKA_REST_LISTENERS: http://0.0.0.0:38082
+      KAFKA_REST_HOST_NAME: 192.168.0.124
+      KAFKA_REST_SCHEMA_REGISTRY_URL: http://localhost:38081
