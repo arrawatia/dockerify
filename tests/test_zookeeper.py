@@ -202,7 +202,7 @@ class StandaloneNetworkingTest(unittest.TestCase):
             image="confluentinc/cp-jmxterm",
             command=JMX_CHECK.format(client_port=52181, jmx_hostname="localhost", jmx_port="39999"),
             host_config={'NetworkMode': 'host'})
-        self.assertTrue("Version = 3.4.9-1757313, built on 08/23/2016 06:50 GMT;" in logs)
+        self.assertTrue("Version = 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT;" in logs)
 
     def test_jmx_bridged_network(self):
 
@@ -211,7 +211,7 @@ class StandaloneNetworkingTest(unittest.TestCase):
             image="confluentinc/cp-jmxterm",
             command=JMX_CHECK.format(client_port=2181, jmx_hostname="bridge-network-jmx", jmx_port="9999"),
             host_config={'NetworkMode': 'standalone-network-test_zk'})
-        self.assertTrue("Version = 3.4.9-1757313, built on 08/23/2016 06:50 GMT;" in logs)
+        self.assertTrue("Version = 3.4.10-39d3a4f269333c922ed3db283be479f9deacaa0f, built on 03/23/2017 10:13 GMT;" in logs)
 
 
 class ClusterBridgeNetworkTest(unittest.TestCase):

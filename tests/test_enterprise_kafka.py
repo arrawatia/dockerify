@@ -9,6 +9,7 @@ CURRENT_DIR = os.path.dirname(os.path.abspath(__file__))
 FIXTURES_DIR = os.path.join(CURRENT_DIR, "fixtures", "debian", "enterprise-kafka")
 HEALTH_CHECK = """bash -c 'cp /etc/kafka/kafka.properties /tmp/cub.properties \
                   && echo security.protocol={security_protocol} >> /tmp/cub.properties \
+                  && echo "metric.reporters=" >> /tmp/cub.properties \
                   && cub kafka-ready {brokers} 40 -b {host}:{port} -c /tmp/cub.properties -s {security_protocol}\
                   && echo PASS || echo FAIL'
                 """
@@ -51,7 +52,6 @@ class ConfigTest(unittest.TestCase):
                 advertised.listeners=PLAINTEXT://adb-metrics:9092
                 broker.id=1
                 confluent.metrics.reporter.bootstrap.servers=adb-metrics:9092
-                confluent.metrics.reporter.publish.ms=1000
                 confluent.metrics.reporter.topic.replicas=1
                 confluent.metrics.reporter.zookeeper.connect=zookeeper:2181/adb-metrics
                 confluent.support.customer.id=c0
@@ -62,6 +62,11 @@ class ConfigTest(unittest.TestCase):
                 zookeeper.connect=zookeeper:2181/adb-metrics
                 """
         self.assertEquals(zk_props.translate(None, string.whitespace), expected.translate(None, string.whitespace))
+        for i in xrange(20):
+          if ("PASS" in  self.cluster.run_command_on_service("adb-metrics", TOPIC_EXISTS_CHECK.format(topic="_confluent-metrics"))):
+            break
+          time.sleep(1)
+
         self.assertTrue("PASS" in self.cluster.run_command_on_service("adb-metrics", TOPIC_EXISTS_CHECK.format(topic="_confluent-metrics")))
 
 

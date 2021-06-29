@@ -347,7 +347,7 @@ class StandaloneNetworkingTest(unittest.TestCase):
             image="confluentinc/cp-jmxterm",
             command=JMX_CHECK.format(jmx_hostname="localhost", jmx_port="39999"),
             host_config={'NetworkMode': 'host'})
-        self.assertTrue("Version = 0.11.0.0-cp1;" in logs)
+        self.assertTrue("Version = 0.11.0.1-cp1;" in logs)
 
     def test_jmx_bridged_network(self):
 
@@ -356,7 +356,7 @@ class StandaloneNetworkingTest(unittest.TestCase):
             image="confluentinc/cp-jmxterm",
             command=JMX_CHECK.format(jmx_hostname="kafka-bridged-jmx", jmx_port="9999"),
             host_config={'NetworkMode': 'standalone-network-test_zk'})
-        self.assertTrue("Version = 0.11.0.0-cp1;" in logs)
+        self.assertTrue("Version = 0.11.0.1-cp1;" in logs)
 
 
 class ClusterBridgedNetworkTest(unittest.TestCase):
